@@ -1,7 +1,7 @@
 docker-core:
   services:
     docker:
-      charm: "cs:~lazypower/trusty/docker-0"
+      charm: "cs:trusty/docker-1"
       num_units: 2
       options:
         latest: true
@@ -15,7 +15,7 @@ docker-core:
         "gui-x": "876.9836380292411"
         "gui-y": "225.43276385085915"
     "flannel-docker":
-      charm: "cs:~lazypower/trusty/flannel-docker-1"
+      charm: "cs:trusty/flannel-docker-1"
       num_units: 0
       annotations:
         "gui-x": "878.1134204692496"
