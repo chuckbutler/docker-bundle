@@ -51,31 +51,25 @@ Use `juju run` to run remotely commands as root:
 
 Let's launch and expose a simple web page.
 
-  ```
-  juju ssh docker/0 -t sudo tmux
-  docker run --name mynginx2 \
-    -v /var/www:/usr/share/nginx/html:ro \
-    -v /var/nginx/conf:/etc/nginx:ro \
-    -P -d nginx
-  cat "<html><body>HELLO</body></html>" > /var/www/index.html
-  ```
+    juju ssh docker/0 -t sudo tmux
+    docker run --name mynginx2 \
+      -v /var/www:/usr/share/nginx/html:ro \
+      -v /var/nginx/conf:/etc/nginx:ro \
+      -P -d nginx
+    cat "<html><body>HELLO</body></html>" > /var/www/index.html
 
 Let's grab the http port:
 
-  ```
-  pip install docker-py
-  export NGINX_PORT=$(python -c "import docker; dc = docker.Client(); print(next(x['PublicPort'] for x in dc.containers()[0]['Ports'] if x['PrivatePort'] == 80))")
+    pip install docker-py
+    export NGINX_PORT=$(python -c "import docker; dc = docker.Client(); print(next(x['PublicPort'] for x in dc.containers()[0]['Ports'] if x['PrivatePort'] == 80))")
 
-  juju-run docker/0 "open-port ${NGINX_PORT}"
-  echo $NGINX_PORT
-  ```
+    juju-run docker/0 "open-port ${NGINX_PORT}"
+    echo $NGINX_PORT
 
   Now let's hit the page:
 
-  ```
-  export DKR_IP=$(juju status --format=oneline | grep '^- docker/0'  | cut -d" " -f3)
-  curl $DKR_IP:$NGINX_PORT
-  ```
+    export DKR_IP=$(juju status --format=oneline | grep '^- docker/0'  | cut -d" " -f3)
+    curl $DKR_IP:$NGINX_PORT
 
 
 
